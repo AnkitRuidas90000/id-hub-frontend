@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ID-HUB Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { background-color: #ffffff; color: #1f2937; font-family: 'Poppins', sans-serif; }
+    input, button { transition: all 0.3s ease; }
+    input:focus, button:hover { transform: scale(1.02); }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center">
+  <h1 class="text-3xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">ID-HUB Admin Panel</h1>
+  <form id="uploadForm" class="flex flex-col gap-4 max-w-md bg-gray-100 p-6 rounded-lg shadow-md">
+    <input type="text" name="gameName" placeholder="Game Name" class="p-3 rounded-lg text-gray-800">
+    <input type="text" name="appId" placeholder="Steam App ID" class="p-3 rounded-lg text-gray-800">
+    <input type="file" name="file" accept=".lua,.json" class="p-3 rounded-lg">
+    <button type="submit" class="bg-gradient-to-r from-blue-500 to-purple-500 p-3 rounded-lg text-white">Upload File</button>
+  </form>
+  <script>
+    document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const response = await fetch('https://id-hub-backend.onrender.com/api/upload', {
+        method: 'POST',
+        body: formData
+      });
+      const result = await response.json();
+      alert(result.message);
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
